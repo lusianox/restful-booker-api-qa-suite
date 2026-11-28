@@ -1,0 +1,52 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/{{bookingid}}"
+method: PUT
+headers:
+  Accept: application/json
+  Cookie: token={{token}}
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"Luciano\",\r
+
+    \    \"lastname\": \"Bucher QA\",\r
+
+    \    \"totalprice\": 320,\r
+
+    \    \"depositpaid\": false,\r
+
+    \    \"bookingdates\": {\r
+
+    \        \"checkin\": \"2026-12-05\",\r
+
+    \        \"checkout\": \"2026-12-15\"\r
+
+    \    },\r
+
+    \    \"additionalneeds\": \"Breakfast included\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      const jsonData = pm.response.json();\r
+
+      pm.test(\"Booking fields were completely updated\", function () {\r
+
+      \    pm.expect(jsonData.lastname).to.eql(\"Bucher QA\");\r
+
+      \    pm.expect(jsonData.totalprice).to.eql(320);\r
+
+      \    pm.expect(jsonData.depositpaid).to.be.false;\r
+
+      });"
+    language: text/javascript
+order: 5000

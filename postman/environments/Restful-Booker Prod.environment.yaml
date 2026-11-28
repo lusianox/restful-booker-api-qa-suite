@@ -1,0 +1,8 @@
+name: Restful-Booker Prod
+values:
+  - key: baseUrl
+    value: 'https://restful-booker.herokuapp.com'
+  - key: token
+    value: ''
+  - key: bookingid
+    value: ''

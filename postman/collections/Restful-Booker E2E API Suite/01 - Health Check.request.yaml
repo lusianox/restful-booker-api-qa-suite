@@ -1,0 +1,28 @@
+$kind: http-request
+url: "{{baseUrl}}/ping"
+method: GET
+headers:
+  - key: Accept
+    value: application/json
+    disabled: true
+  - key: Cookie
+    value: token={{token}}
+    disabled: true
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 201 Created\", function () {\r
+
+      \    pm.response.to.have.status(201);\r
+
+      });\r
+
+      pm.test(\"Response time is acceptable (< 1500ms)\", function () {\r
+
+      \    pm.expect(pm.response.responseTime).to.be.below(1500);\r
+
+      });"
+    language: text/javascript
+order: 1000

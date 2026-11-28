@@ -1,0 +1,70 @@
+Running your collection...
+postman
+
+Restful-Booker E2E API Suite
+
+Root 01 - Health Check
+
+  GET https://restful-booker.herokuapp.com/ping [201 Created, 751 B, 494 ms]
+  Pass  Status code is 201 Created
+  Pass  Response time is acceptable (< 1500ms)
+
+Root 02 - Create Auth Token
+
+  POST https://restful-booker.herokuapp.com/auth [200 OK, 774 B, 141 ms]
+  Pass  Status code is 200 OK
+  Pass  Token is present and not empty
+
+Root 03 - Create Booking
+
+  POST https://restful-booker.herokuapp.com/booking [200 OK, 954 B, 141 ms]
+  Pass  Status code is 200 OK
+  Pass  Response contains bookingid and booking object
+
+Root 04 - Get Booking by ID
+
+  GET https://restful-booker.herokuapp.com/booking/3742 [200 OK, 925 B, 141 ms]
+  Pass  Status code is 200 OK
+  Pass  Booking details match created record
+
+Root 05 - Full Update Booking (PUT)
+
+  PUT https://restful-booker.herokuapp.com/booking/3742 [200 OK, 934 B, 141 ms]
+  Pass  Status code is 200 OK
+  Pass  Booking fields were completely updated
+
+Root 06 - Partial Update Booking (PATCH)
+
+  PATCH https://restful-booker.herokuapp.com/booking/3742 [200 OK, 931 B, 141 ms]
+  Pass  Status code is 200 OK
+  Pass  Only patched fields changed while others remained intact
+
+Root 07 - Negative Test (Missing Required Fields)
+
+  POST https://restful-booker.herokuapp.com/booking [500 Internal Server Error, 781 B, 142 ms]
+  Pass  API rejects incomplete payload (4xx/5xx error)
+
+Root 08 - Delete Booking
+
+  DELETE https://restful-booker.herokuapp.com/booking/3742 [201 Created, 751 B, 141 ms]
+  Pass  Status code is 201 Created (Deletion confirmed)
+
+--------------------------------------------------------------------------
+|                         |              executed |               failed |
+--------------------------+-----------------------+-----------------------
+|              iterations |                     1 |                    0 |
+--------------------------+-----------------------+-----------------------
+|                requests |                     8 |                    0 |
+--------------------------+-----------------------+-----------------------
+|            test-scripts |                     8 |                    0 |
+--------------------------+-----------------------+-----------------------
+|      prerequest-scripts |                     0 |                    0 |
+--------------------------+-----------------------+-----------------------
+|              assertions |                    14 |                    0 |
+--------------------------------------------------------------------------
+| total run duration: 1930 ms                                            |
+--------------------------------------------------------------------------
+| total data received: 814 B (approx)                                    |
+--------------------------------------------------------------------------
+| average response time: 185 ms [min: 141 ms, max: 494 ms, s.d.: 116 ms] |
+--------------------------------------------------------------------------

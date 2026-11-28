@@ -1,0 +1,38 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/{{bookingid}}"
+method: PATCH
+headers:
+  Accept: application/json
+  Cookie: token={{token}}
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"Leandro\",\r
+
+    \    \"additionalneeds\": \"Airport shuttle\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      const jsonData = pm.response.json();\r
+
+      pm.test(\"Only patched fields changed while others remained intact\", function () {\r
+
+      \    pm.expect(jsonData.firstname).to.eql(\"Leandro\");\r
+
+      \    pm.expect(jsonData.lastname).to.eql(\"Bucher QA\");\r
+
+      \    pm.expect(jsonData.additionalneeds).to.eql(\"Airport shuttle\");\r
+
+      });"
+    language: text/javascript
+order: 6000

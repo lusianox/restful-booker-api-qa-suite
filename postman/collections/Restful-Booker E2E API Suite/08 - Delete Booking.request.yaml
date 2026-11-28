@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/{{bookingid}}"
+method: DELETE
+headers:
+  Cookie: token={{token}}
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 201 Created (Deletion confirmed)\", function () {\r
+
+      \    pm.response.to.have.status(201);\r
+
+      });"
+    language: text/javascript
+order: 8000

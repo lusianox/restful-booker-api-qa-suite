@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/booking"
+method: POST
+headers:
+  Accept: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"InvalidUser\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "// En Restful-Booker este bug conocido devuelve 500 en lugar de 400;\r
+
+      pm.test(\"API rejects incomplete payload (4xx/5xx error)\", function () {\r
+
+      \    pm.expect(pm.response.code).to.be.oneOf([400, 422, 500]);\r
+
+      });"
+    language: text/javascript
+order: 7000

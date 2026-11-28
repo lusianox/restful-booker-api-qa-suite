@@ -1,0 +1,39 @@
+$kind: http-request
+url: "{{baseUrl}}/auth"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"admin\",\r
+
+    \    \"password\": \"password123\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      const jsonData = pm.response.json();\r
+
+      pm.test(\"Token is present and not empty\", function () {\r
+
+      \    pm.expect(jsonData).to.have.property(\"token\");\r
+
+      \    pm.expect(jsonData.token).to.be.a(\"string\").and.not.be.empty;\r
+
+      });\r
+
+      \r
+
+      // Guarda el token automáticamente para usarlo en PUT, PATCH y DELETE\r
+
+      pm.environment.set(\"token\", jsonData.token);"
+    language: text/javascript
+order: 2000

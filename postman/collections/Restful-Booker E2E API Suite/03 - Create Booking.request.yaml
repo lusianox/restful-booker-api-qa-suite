@@ -1,0 +1,57 @@
+$kind: http-request
+url: "{{baseUrl}}/booking"
+method: POST
+headers:
+  Accept: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"Luciano\",\r
+
+    \    \"lastname\": \"Bucher\",\r
+
+    \    \"totalprice\": 250,\r
+
+    \    \"depositpaid\": true,\r
+
+    \    \"bookingdates\": {\r
+
+    \        \"checkin\": \"2026-12-01\",\r
+
+    \        \"checkout\": \"2026-12-10\"\r
+
+    \    },\r
+
+    \    \"additionalneeds\": \"Late checkout\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      const jsonData = pm.response.json();\r
+
+      pm.test(\"Response contains bookingid and booking object\", function () {\r
+
+      \    pm.expect(jsonData).to.have.property(\"bookingid\");\r
+
+      \    pm.expect(jsonData.booking.firstname).to.eql(\"Luciano\");\r
+
+      \    pm.expect(jsonData.booking.lastname).to.eql(\"Bucher\");\r
+
+      });\r
+
+      \r
+
+      // Guarda el ID generado dinámicamente\r
+
+      pm.environment.set(\"bookingid\", jsonData.bookingid);"
+    language: text/javascript
+order: 3000

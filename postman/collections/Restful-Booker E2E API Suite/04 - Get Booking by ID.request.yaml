@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/{{bookingid}}"
+method: GET
+headers:
+  Accept: application/json
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      if (pm.response.code === 200) {\r
+
+      \    const jsonData = pm.response.json();\r
+
+      \    pm.test(\"Booking details match created record\", function () {\r
+
+      \        pm.expect(jsonData.firstname).to.eql(\"Luciano\");\r
+
+      \        pm.expect(jsonData.totalprice).to.eql(250);\r
+
+      \        pm.expect(jsonData.depositpaid).to.be.true;\r
+
+      \    });\r
+
+      }"
+    language: text/javascript
+order: 4000
